@@ -5,14 +5,16 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductViewController;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/products', [DashboardController::class, 'index'])
-        ->name('products');
+    Route::get('/products', [DashboardController::class, 'index'])->name('products');
+
+    Route::get('/products/{product}', [ProductViewController::class, 'show'])->name('products.show');
 });
 
 Route::middleware('auth')->group(function () {

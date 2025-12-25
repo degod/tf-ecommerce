@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Dashboard({ products }) {
     return (
@@ -23,8 +23,7 @@ export default function Dashboard({ products }) {
                         {products.map((product) => (
                             <div key={product.id}
                                 className="overflow-hidden bg-white rounded-lg shadow-sm border">
-                                <img
-                                    src="https://placehold.co/300x300"
+                                <img src="https://placehold.co/300x300"
                                     alt={product.name}
                                     className="w-full h-48 object-cover"/>
 
@@ -41,13 +40,11 @@ export default function Dashboard({ products }) {
                                         Stock: {product.stock_quantity} unit(s)
                                     </p>
 
-                                    <button
-                                        className="mt-4 w-full rounded-md bg-indigo-600 px-4 py-2 text-white text-sm font-medium hover:bg-indigo-700 transition"
+                                    <Link href={route('products.show', product.id)}
+                                        className="mt-4 w-full rounded-md bg-indigo-600 px-4 py-2 text-white text-sm font-medium hover:bg-indigo-700 transition" as="button" type="button"
                                         disabled={product.stock_quantity === 0}>
-                                        {product.stock_quantity === 0
-                                            ? 'Out of Stock'
-                                            : 'Add to Cart'}
-                                    </button>
+                                        {product.stock_quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                    </Link>
                                 </div>
                             </div>
                         ))}
