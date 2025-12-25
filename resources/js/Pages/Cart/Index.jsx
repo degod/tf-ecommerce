@@ -46,18 +46,27 @@ export default function CartIndex({ cartItems }) {
 	    });
 	};
 
+    const placeOrder = () => {
+        if (cartItems.length === 0) return;
+
+        router.post(route('orders.store'), {}, {
+            preserveScroll: true,
+        });
+    };
+
     return (
         <AuthenticatedLayout
             header={
                 <h2 className="flex items-center justify-between text-xl font-semibold leading-tight text-gray-800">
 				    <span>My Cart</span>
 
-				    <button
-				        onClick={clearAllItems}
-				        className="rounded bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
-				    >
-				        Clear Cart
-				    </button>
+                    {cartItems.length > 0 && (
+    				    <button onClick={clearAllItems}
+    				        className="rounded bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                            >
+    				        Clear Cart
+    				    </button>
+                    )}
 				</h2>
             }>
             <Head title="Cart" />
@@ -132,7 +141,8 @@ export default function CartIndex({ cartItems }) {
                                     Total: €{cartTotal.toLocaleString()}
                                 </p>
 
-                                <button className="rounded bg-indigo-600 px-6 py-2 text-white hover:bg-indigo-700">
+                                <button onClick={placeOrder}
+                                    className="rounded bg-indigo-600 px-6 py-2 text-white hover:bg-indigo-700">
                                     Place Order
                                 </button>
                             </div>

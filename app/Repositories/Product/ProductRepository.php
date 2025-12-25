@@ -13,7 +13,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function all(): Collection
     {
-        return $this->model->newQuery()->get();
+        return $this->model->newQuery()->orderBy('id', 'DESC')->get();
     }
 
     public function findById(int $id): ?Product

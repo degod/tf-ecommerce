@@ -25,6 +25,7 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return $this->model->newQuery()
             ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
             ->get();
     }
 
