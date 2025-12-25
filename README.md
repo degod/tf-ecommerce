@@ -86,6 +86,12 @@ docker compose --profile build run --rm assets
 -   To run frontend assets in dev mode
 
 ```bash
+docker compose --profile dev up -d --build
+```
+
+-   To run vite in dev mode
+
+```bash
 docker compose --profile dev up vite -d --build
 ```
 
