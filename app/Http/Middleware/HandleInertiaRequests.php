@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -20,6 +22,15 @@ class HandleInertiaRequests extends Middleware
     public function version(Request $request): ?string
     {
         return parent::version($request);
+    }
+
+    public function handle(Request $request, Closure $next)
+    {
+        if (Auth::check() && $request->routeIs('login')) {
+            return redirect()->route('products');
+        }
+
+        return parent::handle($request, $next);
     }
 
     /**
