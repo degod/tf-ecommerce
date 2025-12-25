@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'cartItemCount' => fn () => $request->user() ? $request->user()->cart()->count() : 0,
         ];
     }
 }

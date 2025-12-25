@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductViewController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -15,6 +16,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/products', [DashboardController::class, 'index'])->name('products');
 
     Route::get('/products/{product}', [ProductViewController::class, 'show'])->name('products.show');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::delete('/cart-clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 Route::middleware('auth')->group(function () {

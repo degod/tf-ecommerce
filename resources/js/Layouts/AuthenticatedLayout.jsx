@@ -6,7 +6,8 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const { auth, cartItemCount = 0 } = usePage().props;
+    const user = auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -29,6 +30,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current('products')}
                                 >
                                     Products
+                                </NavLink>
+                                <NavLink
+                                    href={route('cart.index')}
+                                    active={route().current('cart.index')}
+                                >
+                                    Cart ({cartItemCount})
                                 </NavLink>
                             </div>
                         </div>
@@ -133,6 +140,12 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('products')}
                         >
                             Products
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('cart.index')}
+                            active={route().current('cart.index')}
+                        >
+                            Cart ({cartItemCount})
                         </ResponsiveNavLink>
                     </div>
 
