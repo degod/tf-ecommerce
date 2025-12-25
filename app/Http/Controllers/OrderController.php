@@ -10,9 +10,12 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\NotifyLowStockJob;
 
 class OrderController extends Controller
 {
+    private const STOCK_THRESHOLD = 20;
+
     public function __construct(
         private readonly OrderRepositoryInterface $orderRepo,
         private readonly OrderItemRepositoryInterface $orderItemRepo,
@@ -54,6 +57,8 @@ class OrderController extends Controller
         DB::beginTransaction();
 
         try {
+            $lowStockProducts = [];
+
             foreach ($cartItems as $item) {
                 $product = $item->product()->lockForUpdate()->first();
 
@@ -64,6 +69,11 @@ class OrderController extends Controller
                 }
 
                 $product->decrement('stock_quantity', $item->quantity);
+
+                // Collect products below threshold
+                if ($product->stock_quantity < self::STOCK_THRESHOLD) {
+                    $lowStockProducts[] = $product;
+                }
             }
 
             $order = $this->orderRepo->create([
@@ -76,6 +86,11 @@ class OrderController extends Controller
             $this->cartRepo->clearUserCart($user->id);
 
             DB::commit();
+
+            // Dispatch background job if any product is low
+            if (!empty($lowStockProducts)) {
+                NotifyLowStockJob::dispatch($lowStockProducts);
+            }
 
             return redirect()->route('orders.index')
                 ->with('success', 'Order placed successfully!');

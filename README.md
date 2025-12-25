@@ -117,3 +117,6 @@ docker exec -it tf-ecommerce-vite sh
 -   To access application's database, visit
 
     -   `http://localhost:9031`
+
+-   To access application's mailhost, visit
+    -   `http://localhost:8025`
