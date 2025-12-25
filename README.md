@@ -104,19 +104,22 @@ docker exec -it tf-ecommerce-vite sh
 -   To access application, visit
     `http://localhost:9030`
 
--   To Login as "Super Admin":
+-   To Login as any user, just register whatever email and password suites you. EG:
 
     -   `U:  test@mail.com`
-    -   `P:  password`
-
--   To Login as any user:
-
-    -   `U:  select from the list of users (or test@mail.com)`
     -   `P:  password`
 
 -   To access application's database, visit
 
     -   `http://localhost:9031`
 
--   To access application's mailhost, visit
+-   To test "low stock alert", pick a product with lower than 20 units (or easily order a product until it goes below 20)
+
+-   To test "daily sales report", run the below "within the docker container":
+    
+```bash
+php artisan report:daily-sales
+```
+
+-   To access application's mailhost (to view demo emails), visit
     -   `http://localhost:8025`
