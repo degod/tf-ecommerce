@@ -68,7 +68,7 @@ php artisan migrate:fresh --seed
 -   Run automated unit/feature test for backend
 
 ```bash
-php artisan test
+composer test
 ```
 
 -   Exit docker container bash
