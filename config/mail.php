@@ -4,14 +4,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Custom email for threshold
+    | Custom email for daily sales report
+    |--------------------------------------------------------------------------
+    |
+    | This is a custom email to report daily sales of products.
+    |
+    */
+
+    'report_admin_email' => env('REPORT_ADMIN_EMAIL', 'fallback@admin-mail.com'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom email for stock threshold
     |--------------------------------------------------------------------------
     |
     | This is a custom email to report low-stock for products.
     |
     */
 
-    'admin_email' => env('THRESHOLD_ADMIN_EMAIL', 'fallback@mail.com'),
+    'threshold_admin_email' => env('THRESHOLD_ADMIN_EMAIL', 'fallback@mail.com'),
     
     /*
     |--------------------------------------------------------------------------
